@@ -1,0 +1,55 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ template "kong.fullname" . }}-portal-api
+  annotations:
+    {{- range $key, $value := .Values.portal-api.annotations }}
+      {{ $key }}: {{ $value | quote }}
+    {{- end }}
+  labels:
+    app: {{ template "kong.name" . }}
+    chart: "{{ .Chart.Name }}-{{ .Chart.Version }}"
+    release: "{{ .Release.Name }}"
+    heritage: "{{ .Release.Service }}"
+spec:
+  type: {{ .Values.portal-api.type }}
+  {{- if eq .Values.portal-api.type "LoadBalancer" }}
+  {{- if .Values.portal-api.loadBalancerIP }}
+  loadBalancerIP: {{ .Values.portal-api.loadBalancerIP }}
+  {{- end }}
+  {{- if .Values.portal-api.loadBalancerSourceRanges }}
+  loadBalancerSourceRanges:
+  {{- range $cidr := .Values.portal-api.loadBalancerSourceRanges }}
+  - {{ $cidr }}
+  {{- end }}
+  {{- end }}
+  {{- end }}
+  externalIPs:
+  {{- range $ip := .Values.portal-api.externalIPs }}
+  - {{ $ip }}
+  {{- end }}
+  ports:
+  {{- if .Values.portal-api.http.enabled }}
+  - name: kong-portal-api
+    port: {{ .Values.portal-api.http.servicePort }}
+    targetPort: {{ .Values.portal-api.http.containerPort }}
+  {{- if (and (eq .Values.portal-api.type "NodePort") (not (empty .Values.portal-api.http.nodePort))) }}
+    nodePort: {{ .Values.portal-api.http.nodePort }}
+  {{- end }}
+    protocol: TCP
+  {{- end }}
+  {{- if or .Values.portal-api.tls.enabled }}
+  - name: kong-portal-api-tls
+    port: {{ .Values.portal-api.tls.servicePort }}
+    targetPort: {{ .Values.portal-api.tls.containerPort }}
+  {{- if (and (eq .Values.portal-api.type "NodePort") (not (empty .Values.portal-api.tls.nodePort))) }}
+    nodePort: {{ .Values.portal-api.tls.nodePort }}
+  {{- end }}
+    protocol: TCP
+  {{- end }}
+
+
+  selector:
+    app: {{ template "kong.name" . }}
+    release: {{ .Release.Name }}
+    component: app
