@@ -83,6 +83,140 @@ proxy:
 
   externalIPs: []
 
+manager:
+  # If you want to specify annotations for the proxy service, uncomment the following
+  # line, add additional or adjust as needed, and remove the curly braces after 'annotations:'.
+  annotations: {}
+  #  service.beta.kubernetes.io/aws-load-balancer-proxy-protocol: "*"
+
+  # HTTP plain-text traffic
+  http:
+    enabled: true
+    servicePort: 8002
+    containerPort: 8002
+    # Set a nodePort which is available if service type is NodePort
+    # nodePort: 32080
+
+  tls:
+    enabled: true
+    servicePort: 8445
+    containerPort: 8445
+    # Set a nodePort which is available if service type is NodePort
+    # nodePort: 32443
+
+  type: NodePort
+
+  # Kong proxy ingress settings.
+  ingress:
+    # Enable/disable exposure using ingress.
+    enabled: false
+    # TLS secret name.
+    # tls: kong-proxy.example.com-tls
+    # Array of ingress hosts.
+    hosts: []
+    # Map of ingress annotations.
+    annotations: {}
+    # Ingress path.
+    path: /
+
+  externalIPs: []
+
+portal:
+  # If you want to specify annotations for the proxy service, uncomment the following
+  # line, add additional or adjust as needed, and remove the curly braces after 'annotations:'.
+  annotations: {}
+  #  service.beta.kubernetes.io/aws-load-balancer-proxy-protocol: "*"
+
+  # HTTP plain-text traffic
+  http:
+    enabled: true
+    servicePort: 8003
+    containerPort: 8003
+    # Set a nodePort which is available if service type is NodePort
+    # nodePort: 32080
+
+  tls:
+    enabled: true
+    servicePort: 8446
+    containerPort: 8446
+    # Set a nodePort which is available if service type is NodePort
+    # nodePort: 32443
+
+  type: NodePort
+
+  # Kong proxy ingress settings.
+  ingress:
+    # Enable/disable exposure using ingress.
+    enabled: false
+    # TLS secret name.
+    # tls: kong-proxy.example.com-tls
+    # Array of ingress hosts.
+    hosts: []
+    # Map of ingress annotations.
+    annotations: {}
+    # Ingress path.
+    path: /
+
+  externalIPs: []
+
+portal-api:
+  # If you want to specify annotations for the proxy service, uncomment the following
+  # line, add additional or adjust as needed, and remove the curly braces after 'annotations:'.
+  annotations: {}
+  #  service.beta.kubernetes.io/aws-load-balancer-proxy-protocol: "*"
+
+  # HTTP plain-text traffic
+  http:
+    enabled: true
+    servicePort: 8004
+    containerPort: 8004
+    # Set a nodePort which is available if service type is NodePort
+    # nodePort: 32080
+
+  tls:
+    enabled: true
+    servicePort: 8447
+    containerPort: 8447
+    # Set a nodePort which is available if service type is NodePort
+    # nodePort: 32443
+
+  type: NodePort
+
+  # Kong proxy ingress settings.
+  ingress:
+    # Enable/disable exposure using ingress.
+    enabled: false
+    # TLS secret name.
+    # tls: kong-proxy.example.com-tls
+    # Array of ingress hosts.
+    hosts: []
+    # Map of ingress annotations.
+    annotations: {}
+    # Ingress path.
+    path: /
+
+  externalIPs: []
+
+enterprise:
+  enabled: false
+  vitals:
+    enabled: true
+  portal:
+    enabled: false
+  rbac:
+    enabled: false
+    admin_gui_auth: basic-auth
+  smtp:
+    enabled: false
+    portal_emails_from: none@example.com
+    portal_emails_reply_to: none@example.com
+    smtp_admin_emails: none@example.com
+    smtp_host: smtp.example.com
+    smtp_port: 587
+    smtp_starttls: on
+    smtp_username: postmaster@example.com
+    smtp_password: hunter2
+
 # Set runMigrations to run Kong migrations
 runMigrations: true
 
