@@ -166,6 +166,56 @@ spec:
           {{- end}}
           protocol: TCP
         {{- end }}
+        {{- if .Values.enterprise.enabled }}
+        {{- if .Values.manager.http.enabled }}
+        - name: manager
+          containerPort: {{ .Values.manager.http.containerPort }}
+          {{- if .Values.manager.http.hostPort }}
+          hostPort: {{ .Values.manager.http.hostPort }}
+          {{- end}}
+          protocol: TCP
+        {{- end }}
+        {{- if .Values.manager.tls.enabled }}
+        - name: manager-tls
+          containerPort: {{ .Values.manager.tls.containerPort }}
+          {{- if .Values.manager.tls.hostPort }}
+          hostPort: {{ .Values.manager.tls.hostPort }}
+          {{- end}}
+          protocol: TCP
+        {{- end }}
+        {{- if .Values.portal.http.enabled }}
+        - name: portal
+          containerPort: {{ .Values.portal.http.containerPort }}
+          {{- if .Values.portal.http.hostPort }}
+          hostPort: {{ .Values.portal.http.hostPort }}
+          {{- end}}
+          protocol: TCP
+        {{- end }}
+        {{- if .Values.portal.tls.enabled }}
+        - name: portal-tls
+          containerPort: {{ .Values.portal.tls.containerPort }}
+          {{- if .Values.portal.tls.hostPort }}
+          hostPort: {{ .Values.portal.tls.hostPort }}
+          {{- end}}
+          protocol: TCP
+        {{- end }}
+        {{- if .Values.portal-api.http.enabled }}
+        - name: portal-api
+          containerPort: {{ .Values.portal-api.http.containerPort }}
+          {{- if .Values.portal-api.http.hostPort }}
+          hostPort: {{ .Values.portal-api.http.hostPort }}
+          {{- end}}
+          protocol: TCP
+        {{- end }}
+        {{- if .Values.portal-api.tls.enabled }}
+        - name: portal-api-tls
+          containerPort: {{ .Values.portal-api.tls.containerPort }}
+          {{- if .Values.portal-api.tls.hostPort }}
+          hostPort: {{ .Values.portal-api.tls.hostPort }}
+          {{- end}}
+          protocol: TCP
+        {{- end }}
+        {{- end }}
         readinessProbe:
 {{ toYaml .Values.readinessProbe | indent 10 }}
         livenessProbe:
