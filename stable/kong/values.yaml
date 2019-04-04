@@ -159,7 +159,7 @@ portal:
 
   externalIPs: []
 
-portal-api:
+portalapi:
   # If you want to specify annotations for the proxy service, uncomment the following
   # line, add additional or adjust as needed, and remove the curly braces after 'annotations:'.
   annotations: {}

@@ -91,14 +91,14 @@ Create the KONG_PORTAL_API_LISTEN value string
 */}}
 {{- define "kong.kongPortalApiListenValue" -}}
 
-{{- if and .Values.portal-api.http.enabled .Values.portal-api.tls.enabled -}}
-   0.0.0.0:{{ .Values.portal-api.http.containerPort }},0.0.0.0:{{ .Values.portal-api.tls.containerPort }} ssl
+{{- if and .Values.portalapi.http.enabled .Values.portalapi.tls.enabled -}}
+   0.0.0.0:{{ .Values.portalapi.http.containerPort }},0.0.0.0:{{ .Values.portalapi.tls.containerPort }} ssl
 {{- else -}}
-{{- if .Values.portal-api.http.enabled -}}
-   0.0.0.0:{{ .Values.portal-api.http.containerPort }}
+{{- if .Values.portalapi.http.enabled -}}
+   0.0.0.0:{{ .Values.portalapi.http.containerPort }}
 {{- end -}}
-{{- if .Values.portal-api.tls.enabled -}}
-   0.0.0.0:{{ .Values.portal-api.tls.containerPort }} ssl
+{{- if .Values.portalapi.tls.enabled -}}
+   0.0.0.0:{{ .Values.portalapi.tls.containerPort }} ssl
 {{- end -}}
 {{- end -}}
 
