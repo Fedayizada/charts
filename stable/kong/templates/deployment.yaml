@@ -60,6 +60,18 @@ spec:
         - name: KONG_PROXY_LISTEN
           value: {{ template "kong.kongProxyListenValue" . }}
         {{- end }}
+        {{- if and (not .Values.env.admin_gui_listen) (.Values.enterprise.enabled) }}
+        - name: KONG_ADMIN_GUI_LISTEN
+          value: {{ template "kong.kongManagerListenValue" . }}
+        {{- end }}
+        {{- if and (not .Values.env.portal_gui_listen) (.Values.enterprise.enabled) (.Values.enterprise.portal.enabled) }}
+        - name: KONG_PORTAL_GUI_LISTEN
+          value: {{ template "kong.kongPortalListenValue" . }}
+        {{- end }}
+        {{- if and (not .Values.env.portal_api_listen) (.Values.enterprise.enabled) (.Values.enterprise.portal.enabled) }}
+        - name: KONG_PORTAL_API_LISTEN
+          value: {{ template "kong.kongPortalApiListenValue" . }}
+        {{- end }}
         - name: KONG_NGINX_DAEMON
           value: "off"
         - name: KONG_PROXY_ACCESS_LOG

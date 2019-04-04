@@ -53,6 +53,56 @@ Create the KONG_PROXY_LISTEN value string
 {{- end }}
 
 {{/*
+Create the KONG_ADMIN_GUI_LISTEN value string
+*/}}
+{{- define "kong.kongManagerListenValue" -}}
+
+{{- if and .Values.manager.http.enabled .Values.manager.tls.enabled -}}
+   0.0.0.0:{{ .Values.manager.http.containerPort }},0.0.0.0:{{ .Values.manager.tls.containerPort }} ssl
+{{- else -}}
+{{- if .Values.manager.http.enabled -}}
+   0.0.0.0:{{ .Values.manager.http.containerPort }}
+{{- end -}}
+{{- if .Values.manager.tls.enabled -}}
+   0.0.0.0:{{ .Values.manager.tls.containerPort }} ssl
+{{- end -}}
+{{- end -}}
+
+{{/*
+Create the KONG_PORTAL_GUI_LISTEN value string
+*/}}
+{{- define "kong.kongPortalListenValue" -}}
+
+{{- if and .Values.portal.http.enabled .Values.portal.tls.enabled -}}
+   0.0.0.0:{{ .Values.portal.http.containerPort }},0.0.0.0:{{ .Values.portal.tls.containerPort }} ssl
+{{- else -}}
+{{- if .Values.portal.http.enabled -}}
+   0.0.0.0:{{ .Values.portal.http.containerPort }}
+{{- end -}}
+{{- if .Values.portal.tls.enabled -}}
+   0.0.0.0:{{ .Values.portal.tls.containerPort }} ssl
+{{- end -}}
+{{- end -}}
+
+{{- end }}
+
+{{/*
+Create the KONG_PORTAL_API_LISTEN value string
+*/}}
+{{- define "kong.kongPortalApiListenValue" -}}
+
+{{- if and .Values.portal-api.http.enabled .Values.portal-api.tls.enabled -}}
+   0.0.0.0:{{ .Values.portal-api.http.containerPort }},0.0.0.0:{{ .Values.portal-api.tls.containerPort }} ssl
+{{- else -}}
+{{- if .Values.portal-api.http.enabled -}}
+   0.0.0.0:{{ .Values.portal-api.http.containerPort }}
+{{- end -}}
+{{- if .Values.portal-api.tls.enabled -}}
+   0.0.0.0:{{ .Values.portal-api.tls.containerPort }} ssl
+{{- end -}}
+{{- end -}}
+
+{{/*
 Create the ingress servicePort value string
 */}}
 {{- define "kong.ingress.servicePort" -}}
