@@ -68,6 +68,8 @@ Create the KONG_ADMIN_GUI_LISTEN value string
 {{- end -}}
 {{- end -}}
 
+{{- end }}
+
 {{/*
 Create the KONG_PORTAL_GUI_LISTEN value string
 */}}
@@ -101,6 +103,8 @@ Create the KONG_PORTAL_API_LISTEN value string
    0.0.0.0:{{ .Values.portalapi.tls.containerPort }} ssl
 {{- end -}}
 {{- end -}}
+
+{{- end }}
 
 {{/*
 Create the ingress servicePort value string
