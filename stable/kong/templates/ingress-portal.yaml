@@ -1,3 +1,4 @@
+{{- if .Values.enterprise.enabled }}
 {{- if .Values.portal.ingress.enabled -}}
 {{- $serviceName := include "kong.fullname" . -}}
 {{- $servicePort := include "kong.ingress.servicePort" . -}}
@@ -30,4 +31,5 @@ spec:
   tls:
 {{ toYaml .Values.portal.ingress.tls | indent 4 }}
   {{- end -}}
+{{- end -}}
 {{- end -}}
