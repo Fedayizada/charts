@@ -73,6 +73,13 @@ spec:
             secretKeyRef:
               name: {{ template "kong.postgresql.fullname" . }}
               key: postgresql-password
+        {{- if .Values.enterprise.enabled }}
+        - name: KONG_LICENSE_DATA
+          valueFrom:
+            secretKeyRef:
+              name: kong-enterprise-license
+              key: license
+        {{- end }}
         {{- end }}
         {{- if .Values.cassandra.enabled }}
         - name: KONG_CASSANDRA_CONTACT_POINTS
