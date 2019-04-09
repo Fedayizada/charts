@@ -78,9 +78,17 @@ spec:
           value: "/dev/stdout"
         - name: KONG_ADMIN_ACCESS_LOG
           value: "/dev/stdout"
+        - name: KONG_ADMIN_GUI_ACCESS_LOG
+          value: "/dev/stdout"
+        - name: KONG_PORTAL_API_ACCESS_LOG
+          value: "/dev/stdout"
         - name: KONG_PROXY_ERROR_LOG
           value: "/dev/stderr"
         - name: KONG_ADMIN_ERROR_LOG
+          value: "/dev/stderr"
+        - name: KONG_ADMIN_GUI_ERROR_LOG
+          value: "/dev/stderr"
+        - name: KONG_PORTAL_API_ERROR_LOG
           value: "/dev/stderr"
         {{- if .Values.enterprise.enabled }}
         {{- if .Values.enterprise.vitals.enabled }}
