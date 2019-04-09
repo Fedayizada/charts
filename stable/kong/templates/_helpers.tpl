@@ -109,11 +109,12 @@ Create the KONG_PORTAL_API_LISTEN value string
 {{/*
 Create the ingress servicePort value string
 */}}
+
 {{- define "kong.ingress.servicePort" -}}
-{{- if .Values.proxy.tls.enabled -}}
-   {{ .Values.proxy.tls.servicePort }}
+{{- if .tls.enabled -}}
+   {{ .tls.servicePort }}
 {{- else -}}
-   {{ .Values.proxy.http.servicePort }}
+   {{ .http.servicePort }}
 {{- end -}}
 {{- end -}}
 
