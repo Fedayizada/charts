@@ -104,6 +104,8 @@ spec:
           value: "on"
         - name: KONG_ADMIN_GUI_AUTH
           value: {{ .Values.enterprise.rbac.admin_gui_auth | default "basic-auth" }}
+        - name: KONG_ADMIN_GUI_AUTH_CONF
+          value: {{ toJson .Values.enterprise.rbac.admin_gui_auth_conf | default "" }}
         {{- end }}
         {{- if .Values.enterprise.smtp.enabled }}
         - name: KONG_PORTAL_EMAILS_REPLY_TO

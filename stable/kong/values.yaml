@@ -206,6 +206,8 @@ enterprise:
   rbac:
     enabled: false
     admin_gui_auth: basic-auth
+    # Should be set to the appropriate plugin config JSON if not using basic-auth
+    #admin_gui_auth_conf: ''
   smtp:
     enabled: false
     portal_emails_from: none@example.com
