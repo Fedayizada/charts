@@ -61,11 +61,7 @@ spec:
         - name: KONG_SMTP_MOCK
           value: "on"
         {{- end }}
-        - name: KONG_LICENSE_DATA
-          valueFrom:
-            secretKeyRef:
-              name: {{ .Values.enterprise.license_secret }}
-              key: license
+        {{- include "kong.license" . | nindent 8 }}
         {{- end }}
         {{- include "kong.env" .  | indent 8 }}
         {{- if .Values.admin.useTLS }}

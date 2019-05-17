@@ -137,11 +137,7 @@ Create the ingress servicePort value string
   imagePullPolicy: {{ .Values.image.pullPolicy }}
   env:
   {{- if .Values.enterprise.enabled }}
-  - name: KONG_LICENSE_DATA
-    valueFrom:
-      secretKeyRef:
-        name: {{ .Values.enterprise.license_secret }}
-        key: license
+  {{- include "kong.license" . | nindent 2 }}
   {{- end }}
   {{- if .Values.postgresql.enabled }}
   - name: KONG_PG_HOST
@@ -212,4 +208,15 @@ Create the ingress servicePort value string
     timeoutSeconds: 1
   resources:
 {{ toYaml .Values.ingressController.resources | indent 10 }}
+{{- end -}}
+
+{{/*
+Retrieve Kong Enterprise license from a secret and make it available in env vars
+*/}}
+{{- define "kong.license" -}}
+- name: KONG_LICENSE_DATA
+  valueFrom:
+    secretKeyRef:
+      name: {{ .Values.enterprise.license_secret }}
+      key: license
 {{- end -}}

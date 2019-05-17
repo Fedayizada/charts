@@ -134,11 +134,7 @@ spec:
         - name: KONG_SMTP_MOCK
           value: "on"
         {{- end }}
-        - name: KONG_LICENSE_DATA
-          valueFrom:
-            secretKeyRef:
-              name: {{ .Values.enterprise.license_secret }}
-              key: license
+        {{- include "kong.license" . | nindent 8 }}
         {{- end }}
         {{- include "kong.env" .  | indent 8 }}
         {{- if .Values.postgresql.enabled }}
@@ -151,13 +147,6 @@ spec:
             secretKeyRef:
               name: {{ template "kong.postgresql.fullname" . }}
               key: postgresql-password
-        {{- end }}
-        {{- if .Values.enterprise.enabled }}
-        - name: KONG_LICENSE_DATA
-          valueFrom:
-            secretKeyRef:
-              name: {{ .Values.enterprise.license_secret }}
-              key: license
         {{- end }}
         {{- if .Values.cassandra.enabled }}
         - name: KONG_CASSANDRA_CONTACT_POINTS
