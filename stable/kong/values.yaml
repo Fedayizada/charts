@@ -3,10 +3,12 @@
 
 image:
   repository: kong
+  # repository: kong-docker-kong-enterprise-edition-docker.bintray.io/kong-enterprise-edition
   tag: 1.1
   pullPolicy: IfNotPresent
   ## Optionally specify an array of imagePullSecrets.
   ## Secrets must be manually created in the namespace.
+  ## If using the official Kong Enterprise registry above, you MUST provide a secret.
   ## ref: https://kubernetes.io/docs/tasks/configure-pod-container/pull-image-private-registry/
   ##
   # pullSecrets:
@@ -84,7 +86,7 @@ proxy:
   externalIPs: []
 
 manager:
-  # If you want to specify annotations for the proxy service, uncomment the following
+  # If you want to specify annotations for the Manager service, uncomment the following
   # line, add additional or adjust as needed, and remove the curly braces after 'annotations:'.
   annotations: {}
   #  service.beta.kubernetes.io/aws-load-balancer-proxy-protocol: "*"
@@ -122,7 +124,7 @@ manager:
   externalIPs: []
 
 portal:
-  # If you want to specify annotations for the proxy service, uncomment the following
+  # If you want to specify annotations for the Portal service, uncomment the following
   # line, add additional or adjust as needed, and remove the curly braces after 'annotations:'.
   annotations: {}
   #  service.beta.kubernetes.io/aws-load-balancer-proxy-protocol: "*"
@@ -160,7 +162,7 @@ portal:
   externalIPs: []
 
 portalapi:
-  # If you want to specify annotations for the proxy service, uncomment the following
+  # If you want to specify annotations for the Portal API service, uncomment the following
   # line, add additional or adjust as needed, and remove the curly braces after 'annotations:'.
   annotations: {}
   #  service.beta.kubernetes.io/aws-load-balancer-proxy-protocol: "*"
@@ -197,9 +199,18 @@ portalapi:
 
   externalIPs: []
 
+# Toggle Kong Enterprise features on or off
+# RBAC and SMTP configuration have additional options that must all be set together
+# Other settings should be added to the "env" settings below
 enterprise:
   enabled: false
+  # Kong Enterprise license secret name
+  # This secret must contain a single 'license' key, containing your base64-encoded license data
+  # The license secret is required for all Kong Enterprise deployments
   license_secret: you-must-create-a-kong-license-secret
+  # Session configuration secret
+  # This should contain 'admin' and 'portal' keys, containing a base64-encoded session config
+  # The session conf secret is required if using RBAC or the Portal
   session_conf_secret: you-must-create-a-kong-session-conf-secret
   vitals:
     enabled: true
@@ -208,7 +219,7 @@ enterprise:
   rbac:
     enabled: false
     admin_gui_auth: basic-auth
-    # Should be set to the appropriate plugin config JSON if not using basic-auth
+    # Set to the appropriate plugin config JSON if not using basic-auth
     #admin_gui_auth_conf: ''
   smtp:
     enabled: false
@@ -244,6 +255,7 @@ resources: {}
   #  memory: 128Mi
 
 # readinessProbe for Kong pods
+# If using Kong Enterprise with RBAC, you must add a Kong-Admin-Token header
 readinessProbe:
   httpGet:
     path: "/status"
@@ -256,6 +268,7 @@ readinessProbe:
   failureThreshold: 5
 
 # livenessProbe for Kong pods
+# If using Kong Enterprise with RBAC, you must add a Kong-Admin-Token header
 livenessProbe:
   httpGet:
     path: "/status"
