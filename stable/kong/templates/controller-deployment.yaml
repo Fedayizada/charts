@@ -45,12 +45,10 @@ spec:
           value: 'off'
         {{- if .Values.enterprise.enabled }}
         {{- if .Values.enterprise.rbac.enabled }}
-        - name: KONG_ENFORCE_RBAC
-          value: "on"
-        - name: KONG_ADMIN_GUI_AUTH
-          value: {{ .Values.enterprise.rbac.admin_gui_auth | default "basic-auth" }}
-        - name: KONG_ADMIN_GUI_AUTH_CONF
-          value: {{ toJson .Values.enterprise.rbac.admin_gui_auth_conf | default "" }}
+        # TODO: uncomment this once we have a means of securely providing the
+        # controller its token using a secret.
+        #- name: KONG_ENFORCE_RBAC
+        #  value: "on"
         {{- end }}
         # the controller admin API should not receive requests to create admins or developers
         # never enable SMTP on it as such
