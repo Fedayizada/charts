@@ -136,6 +136,13 @@ Create the ingress servicePort value string
   image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
   imagePullPolicy: {{ .Values.image.pullPolicy }}
   env:
+  {{- if .Values.enterprise.enabled }}
+  - name: KONG_LICENSE_DATA
+    valueFrom:
+      secretKeyRef:
+        name: kong-enterprise-license
+        key: license
+  {{- end }}
   {{- if .Values.postgresql.enabled }}
   - name: KONG_PG_HOST
     value: {{ template "kong.postgresql.fullname" . }}
