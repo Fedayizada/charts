@@ -98,6 +98,11 @@ spec:
         {{- if .Values.enterprise.portal.enabled }}
         - name: KONG_PORTAL
           value: "on"
+        - name: KONG_PORTAL_SESSION_CONF
+          valueFrom:
+            secretKeyRef:
+              name: {{ .Values.enterprise.session_conf_secret }}
+              key: portal
         {{- end }}
         {{- if .Values.enterprise.rbac.enabled }}
         - name: KONG_ENFORCE_RBAC
@@ -106,6 +111,11 @@ spec:
           value: {{ .Values.enterprise.rbac.admin_gui_auth | default "basic-auth" }}
         - name: KONG_ADMIN_GUI_AUTH_CONF
           value: {{ toJson .Values.enterprise.rbac.admin_gui_auth_conf | default "" }}
+        - name: KONG_ADMIN_GUI_SESSION_CONF
+          valueFrom:
+            secretKeyRef:
+              name: {{ .Values.enterprise.session_conf_secret }}
+              key: admin
         {{- end }}
         {{- if .Values.enterprise.smtp.enabled }}
         - name: KONG_PORTAL_EMAILS_REPLY_TO
@@ -127,7 +137,7 @@ spec:
         - name: KONG_LICENSE_DATA
           valueFrom:
             secretKeyRef:
-              name: kong-enterprise-license
+              name: {{ .Values.enterprise.license_secret }}
               key: license
         {{- end }}
         {{- include "kong.env" .  | indent 8 }}
@@ -146,7 +156,7 @@ spec:
         - name: KONG_LICENSE_DATA
           valueFrom:
             secretKeyRef:
-              name: kong-enterprise-license
+              name: {{ .Values.enterprise.license_secret }}
               key: license
         {{- end }}
         {{- if .Values.cassandra.enabled }}

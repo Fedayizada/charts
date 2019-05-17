@@ -140,7 +140,7 @@ Create the ingress servicePort value string
   - name: KONG_LICENSE_DATA
     valueFrom:
       secretKeyRef:
-        name: kong-enterprise-license
+        name: {{ .Values.enterprise.license_secret }}
         key: license
   {{- end }}
   {{- if .Values.postgresql.enabled }}

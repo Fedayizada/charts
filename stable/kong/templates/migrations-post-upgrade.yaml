@@ -56,7 +56,7 @@ spec:
         - name: KONG_LICENSE_DATA
           valueFrom:
             secretKeyRef:
-              name: kong-enterprise-license
+              name: {{ .Values.enterprise.license_secret }}
               key: license
         {{- end }}
         {{- include "kong.env" .  | indent 8 }}

@@ -199,6 +199,8 @@ portalapi:
 
 enterprise:
   enabled: false
+  license_secret: you-must-create-a-kong-license-secret
+  session_conf_secret: you-must-create-a-kong-session-conf-secret
   vitals:
     enabled: true
   portal:
