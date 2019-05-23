@@ -28,6 +28,16 @@ To install the chart with the release name `my-release`:
 $ helm install --name my-release stable/kong
 ```
 
+If using Kong Enterprise, several additional steps are necessary before
+installing the chart. At minimum, you must:
+* Create a [license secret](#license).
+* Set `enterprise.enabled: true` in values.yaml.
+* Update values.yaml to use a Kong Enterprise image. If needed, follow the
+instructions in values.yaml to add a registry pull secret.
+
+Reading through [the full list of Enterprise considerations](#kong-enterprise-specific-parameters)
+is recommended.
+
 > **Tip**: List all releases using `helm list`
 
 ## Uninstalling the Chart
