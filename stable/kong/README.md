@@ -189,7 +189,7 @@ $ helm install stable/kong --name my-release -f values.yaml
 ### Kong Enterprise-specific parameters
 
 Kong Enterprise requires some additional configuration not needed when using
-Kong Core. Some of the more important configuration is grouped in sections
+Kong OSS. Some of the more important configuration is grouped in sections
 under the `.enterprise` key in values.yaml, though most enterprise-specific
 configuration can be placed under the `.env` key.
 
